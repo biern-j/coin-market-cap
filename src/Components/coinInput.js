@@ -61,7 +61,7 @@ const SubmitIcon = styled(Icon)`
  
 `;
 
-class Crawler extends React.Component {
+class CoinInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
@@ -99,4 +99,4 @@ class Crawler extends React.Component {
   }
 };
 
-export default Crawler;
+export default CoinInput;
