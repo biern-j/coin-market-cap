@@ -6,13 +6,13 @@ export const  fetchAppData = async ({address, errorMessage}) => {
     const marketCapTicker = await fetch(address);
     return await marketCapTicker.json();
   } catch(err) {
-    throw Error(errorMessage);
+    return Error(errorMessage);
   }
 };
 
 export const findListingCoin = (coinToListing, coin) =>
   Object.values(coinToListing.data).find(item =>
-    [item.symbol, item.name].includes(coin)
+    [item.symbol, item.symbol.toLowerCase, item.name].includes(coin)
   );
 
 export const getPostAppForCoin = (id) => `https://api.coinmarketcap.com/v2/ticker/${id}/`;

@@ -8,7 +8,7 @@ async  function coinMarketCapData(coin, listings) {
 
   const foundListingCoin = findListingCoin(listings, coin);
   if (foundListingCoin === undefined) {
-    throw Error("No such coin in a Listings");
+    return Error("No such coin in a Listings");
   }
 
   const POST_APP_ticker = {

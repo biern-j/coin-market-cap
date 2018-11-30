@@ -55,7 +55,7 @@ class App extends Component {
     this.setState({
       selectedCoinDetails: result,
       counter: this.state.counter + 1,
-      selectedCoins: [...this.state.selectedCoins, result.coinTicker]
+      selectedCoins: [...this.state.selectedCoins, result]
     });
 
     localStorage.setItem("coinData", JSON.stringify(this.state.coinsData));
@@ -68,11 +68,19 @@ class App extends Component {
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin}/>
         <SelectedCoins>
-          {this.state.selectedCoins !== [] ?
-            this.state.selectedCoins.map(item => <CoinDetails key={item.id} coin={item}/>)
-            :
-            ""
+          {/*{this.state.selectedCoins !== [] ?*/}
+            {/*(this.state.selectedCoinDetails instanceof Error ?*/}
+                {/*this.state.selectedCoinDetails.toString() :*/}
+              {/*this.state.selectedCoins.map(item => <CoinDetails coin={item}/>))*/}
+             {/*:*/}
+            {/*""*/}
+          {/*}*/}
+            {this.state.selectedCoins !== [] ?
+                this.state.selectedCoins.map((item, index) => <CoinDetails key={index} coin={item}/>)
+              :
+              ""
           }
+
         </SelectedCoins>
       </Container>
     );
