@@ -1,4 +1,4 @@
-import { fetchAppData, getPostAppForCoin, findListingCoin } from "./data-processing-helpers";
+import { fetchAppData, getPostAppForCoin, findListingCoin } from "./data-processing";
 
 async  function coinMarketCapData(coin, listings) {
 
