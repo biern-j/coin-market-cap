@@ -13,65 +13,70 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const CoinName = styled.div`
+const SelectedCoins = styled.div`
    color: #61dafb;
 `;
 
-const CrawlerStyle = styled(Crawler)`
+const CoinInputStyle = styled(CoinInput)`
 
 `;
+
+const POST_APP_listings = {
+  address:  "https://api.coinmarketcap.com/v2/listings/",
+  errorMessage: "Error Listings"
+};
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = { coinDetails: "", marketCapData: {}, counter: 0 };
-    this.handleCrawledCoin = this.handleCrawledCoin.bind(this);
+    this.state = { selectedCoinDetails: "", coinsData: {}, counter: 0, selectedCoins: [] };
+    this.handleSelectedCoin = this.handleSelectedCoin.bind(this);
   }
 
- componentDidMount() {
-    const data = localStorage.getItem("coinMarketData");
+  async componentDidMount() {
+    this.setState({ coinsData: await fetchAppData(POST_APP_listings) });
+
+    const data = localStorage.getItem("coinData");
     if (data) {
-      this.setState({ marketCapData: JSON.parse(data) });
+      this.setState({ coinsData: JSON.parse(data) });
+    }
+
+    const selectedCoins = localStorage.getItem("selectedCoinsList");
+    if (selectedCoins) {
+      this.setState({ selectedCoins: JSON.parse(selectedCoins) });
     }
   }
 
- handleCrawledCoin = async (coin) => {
-    if (this.state.counter === 0 || this.state.counter >= 5) {
-      this.setState({ marketCapData: await fetchListings() });
+  handleSelectedCoin = async (coin) => {
+    if (this.state.counter >= 5) {
+      this.setState({ coinsData: await fetchAppData(POST_APP_listings) });
     }
+    const result = await coinMarketCapData(coin, this.state.coinsData);
+    this.setState({
+      selectedCoinDetails: result,
+      counter: this.state.counter + 1,
+      selectedCoins: [...this.state.selectedCoins, result.coinTicker]
+    });
 
-    const result = await coinMarketCapData(coin, this.state.marketCapData);
-    this.setState({ coinDetails: result, counter: this.state.counter + 1 });
-
-   localStorage.setItem("coinMarketData", JSON.stringify(this.state.marketCapData));
+    localStorage.setItem("coinData", JSON.stringify(this.state.coinsData));
+    localStorage.setItem("selectedCoinsList", JSON.stringify(this.state.selectedCoins));
   };
 
   render() {
+    console.log("coin list", this.state.selectedCoins, "all data", this.state.coinsData);
     return (
       <Container>
-        <CrawlerStyle onChange={this.handleCrawledCoin}/>
-        <CoinName>
-            {this.state.coinDetails !== "" ?
-              (this.state.coinDetails instanceof Error ?
-                  this.state.coinDetails.toString() :
-                  (<CoinDetails coin={this.state.coinDetails.coinTicker}/>)
-              ) :
-              ""
-            }
-          </CoinName>
+        <CoinInputStyle onChange={this.handleSelectedCoin}/>
+        <SelectedCoins>
+          {this.state.selectedCoins !== [] ?
+            this.state.selectedCoins.map(item => <CoinDetails key={item.id} coin={item}/>)
+            :
+            ""
+          }
+        </SelectedCoins>
       </Container>
     );
   }
 }
-
-const fetchListings = async () => {
-  try {
-    const marketCapListings = await
-      fetch("https://api.coinmarketcap.com/v2/listings/");
-    return await marketCapListings.json();
-  } catch(err) {
-    return Error("Error Listings");
-  }
-};
 
 export default App;
