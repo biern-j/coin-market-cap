@@ -19,9 +19,9 @@ const CoinDetails = ({coin}) => {
     <List>
       <ListItem>{coin.symbol}</ListItem>
       <ListItem>{coin.name}</ListItem>
-      {/*<ListItem>price: {coin.quotes.USD.price}$</ListItem>*/}
-      {/*<ListItem>percent change 7d: {coin.quotes.USD.percent_change_7d}%</ListItem>*/}
-      {/*<ListItem>percent change 24h: {coin.quotes.USD.percent_change_24h}%</ListItem>*/}
+      <ListItem>price: {coin.quotes.USD.price}$</ListItem>
+      <ListItem>percent change 7d: {coin.quotes.USD.percent_change_7d}%</ListItem>
+      <ListItem>percent change 24h: {coin.quotes.USD.percent_change_24h}%</ListItem>
     </List>
   );
 };
