@@ -6,7 +6,7 @@ export const fetchAppData = async ({ address }) => {
     const marketCapTicker = await fetch(address);
     const json = await marketCapTicker.json();
     if (json.metadata.error) {
-      throw new Error(json.metadata.error);
+      throw new Error(json.metadata.error.message);
     }
     return json;
   } catch (e) {
