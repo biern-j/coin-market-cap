@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import styled from "styled-components";
-import './App.css';
+import "./App.css";
 import CoinInput from "./Components/coinInput";
 import coinMarketCapData from "./app-data/coin-checker";
 import CoinDetails from "./Components/coin-details";
@@ -14,27 +14,39 @@ const Container = styled.div`
 `;
 
 const SelectedCoins = styled.div`
-   color: #61dafb;
+  color: #61dafb;
 `;
 
-const CoinInputStyle = styled(CoinInput)`
+const CoinInputStyle = styled(CoinInput)``;
 
-`;
-
-const POST_APP_listings = {
-  address:  "https://api.coinmarketcap.com/v2/listings/",
+const listings = {
+  address: "https://api.coinmarketcap.com/v2/listings/",
   errorMessage: "Error Listings"
 };
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = { selectedCoinDetails: "", coinsData: {}, counter: 0, selectedCoins: [] };
-    this.handleSelectedCoin = this.handleSelectedCoin.bind(this);
+function saveLocal(...toSave) {
+  for (const [key, value] of toSave) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
+}
+
+function getLocal(...toRetrieve) {
+  return toRetrieve.reduce(
+    (acc, key) => [...acc, localStorage.getItem(key)],
+    []
+  );
+}
+
+class App extends Component {
+  state = {
+    selectedCoinDetails: "",
+    coinsData: {},
+    counter: 0,
+    selectedCoins: []
+  };
 
   async componentDidMount() {
-    this.setState({ coinsData: await fetchAppData(POST_APP_listings) });
+    this.setState({ coinsData: await fetchAppData(listings) });
 
     const data = localStorage.getItem("coinData");
     if (data) {
@@ -47,41 +59,51 @@ class App extends Component {
     }
   }
 
-  handleSelectedCoin = async (coin) => {
-    if (this.state.counter >= 5) {
-      this.setState({ coinsData: await fetchAppData(POST_APP_listings) });
+  handleSelectedCoin = async coin => {
+    try {
+      if (this.state.counter >= 5) {
+        this.setState({ coinsData: await fetchAppData(listings) });
+      }
+      const result = await coinMarketCapData(coin, this.state.coinsData);
+      this.setState(
+        state => ({
+          selectedCoinDetails: result,
+          counter: state.counter + 1,
+          selectedCoins: [...state.selectedCoins, result]
+        }),
+        () => {
+          saveLocal(
+            ["coinData", this.state.coinsData],
+            ["selectedCoinsList", this.state.selectedCoins]
+          );
+        }
+      );
+    } catch (e) {
+      console.log(e.message);
     }
-    const result = await coinMarketCapData(coin, this.state.coinsData);
-    this.setState({
-      selectedCoinDetails: result,
-      counter: this.state.counter + 1,
-      selectedCoins: [...this.state.selectedCoins, result]
-    });
-
-    localStorage.setItem("coinData", JSON.stringify(this.state.coinsData));
-    localStorage.setItem("selectedCoinsList", JSON.stringify(this.state.selectedCoins));
   };
 
   render() {
-    console.log("coin list", this.state.selectedCoins, "all data", this.state.coinsData);
+    console.log(
+      "coin list",
+      this.state.selectedCoins,
+      "all data",
+      this.state.coinsData,
+      "coin details", this.state.selectedCoinDetails
+    );
     return (
       <Container>
-        <CoinInputStyle onChange={this.handleSelectedCoin}/>
+        <CoinInputStyle onChange={this.handleSelectedCoin} />
         <SelectedCoins>
-          {this.state.selectedCoins !== [] ?
-            (this.state.selectedCoinDetails instanceof Error ?
-                this.state.selectedCoinDetails.toString() :
-              this.state.selectedCoins.map((item, index) => <CoinDetails key={index} coin={item}/>))
-             :
-            ""
-          }
-            {/*{this.state.selectedCoins !== [] ?*/}
-                {/*this.state.selectedCoins.map((item, index) => <CoinDetails key={index} coin={item}/>)*/}
-              {/*:*/}
-              {/*""*/}
-          {/*}*/}
-
+          {this.state.selectedCoinDetails !== "" ?
+            (<CoinDetails coin={this.state.selectedCoinDetails.coinTicker} />) :
+            ""}
         </SelectedCoins>
+        {this.state.selectedCoins !== [] ?
+          this.state.selectedCoins.map((item, index) =>
+            (<CoinDetails key={index} coin={item.coinTicker} />))
+          :
+          []}
       </Container>
     );
   }
