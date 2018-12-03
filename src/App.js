@@ -64,11 +64,11 @@ class App extends Component {
       if (this.state.counter >= 5) {
         this.setState({ coinsData: await fetchAppData(listings) });
       }
-      const result = await coinMarketCapData(coin, this.state.coinsData);
 
+      const result = await coinMarketCapData(coin, this.state.coinsData);
       const checkCoin = this.state.selectedCoins.find(item =>
         item.coinTicker.id === result.coinTicker.id);
-      console.log("checkCoin", checkCoin);
+
       this.setState(
         state => (
           {
@@ -101,12 +101,13 @@ class App extends Component {
         <CoinInputStyle onChange={this.handleSelectedCoin} />
         <SelectedCoins>
           {this.state.selectedCoinDetails !== "" ?
-            (<CoinDetails coin={this.state.selectedCoinDetails.coinTicker} />) :
+            (<CoinDetails coin={this.state.selectedCoinDetails.coinTicker} />)
+            :
             ""}
         </SelectedCoins>
         {this.state.selectedCoins !== [] ?
-          this.state.selectedCoins.map((item, index) =>
-            (<CoinDetails key={index} coin={item.coinTicker} />))
+          this.state.selectedCoins.map(item =>
+            (<CoinDetails key={item.coinTicker.id} coin={item.coinTicker} />))
           :
           []}
       </Container>
