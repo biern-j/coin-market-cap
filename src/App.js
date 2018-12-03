@@ -65,11 +65,16 @@ class App extends Component {
         this.setState({ coinsData: await fetchAppData(listings) });
       }
       const result = await coinMarketCapData(coin, this.state.coinsData);
+
+      const checkCoin = this.state.selectedCoins.find(item =>
+        item.coinTicker.id === result.coinTicker.id);
+      console.log("checkCoin", checkCoin);
       this.setState(
-        state => ({
+        state => (
+          {
           selectedCoinDetails: result,
           counter: state.counter + 1,
-          selectedCoins: [...state.selectedCoins, result]
+          selectedCoins: checkCoin ? state.selectedCoins : [...state.selectedCoins, result]
         }),
         () => {
           saveLocal(
