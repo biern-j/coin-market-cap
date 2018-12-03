@@ -65,6 +65,12 @@ class App extends Component {
         this.setState({ coinsData: await fetchAppData(listings) });
       }
 
+      const reducer = (acc, current) => {
+        return {...acc, [current.coinTicker.id]: current.coinTicker};
+      };
+      const reduceTest =this.state.selectedCoins.reduce(reducer,{});
+      console.log("reducer", reduceTest);
+
       const result = await coinMarketCapData(coin, this.state.coinsData);
       const checkCoin = this.state.selectedCoins.find(item =>
         item.coinTicker.id === result.coinTicker.id);
@@ -96,6 +102,7 @@ class App extends Component {
       this.state.coinsData,
       "coin details", this.state.selectedCoinDetails
     );
+
     return (
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin} />
@@ -116,3 +123,16 @@ class App extends Component {
 }
 
 export default App;
+
+
+// [{"coinTicker":{"id":1027,
+//     "name":"Ethereum","symbol":"ETH",
+//     "website_slug":"ethereum","rank":3,
+//     "circulating_supply":103576437,
+//     "total_supply":103576437,
+//     "max_supply":null,
+//     "quotes":{"USD":{"price":113.67611992,
+//         "volume_24h":1794834913.61305,
+//         "market_cap":11774167530,
+//         "percent_change_1h":0,"percent_change_24h":-2.79,"percent_change_7d":1.92}},
+//     "last_updated":1543848018}}]
