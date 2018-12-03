@@ -68,18 +68,18 @@ class App extends Component {
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin}/>
         <SelectedCoins>
-          {/*{this.state.selectedCoins !== [] ?*/}
-            {/*(this.state.selectedCoinDetails instanceof Error ?*/}
-                {/*this.state.selectedCoinDetails.toString() :*/}
-              {/*this.state.selectedCoins.map(item => <CoinDetails coin={item}/>))*/}
-             {/*:*/}
-            {/*""*/}
-          {/*}*/}
-            {this.state.selectedCoins !== [] ?
-                this.state.selectedCoins.map((item, index) => <CoinDetails key={index} coin={item}/>)
-              :
-              ""
+          {this.state.selectedCoins !== [] ?
+            (this.state.selectedCoinDetails instanceof Error ?
+                this.state.selectedCoinDetails.toString() :
+              this.state.selectedCoins.map((item, index) => <CoinDetails key={index} coin={item}/>))
+             :
+            ""
           }
+            {/*{this.state.selectedCoins !== [] ?*/}
+                {/*this.state.selectedCoins.map((item, index) => <CoinDetails key={index} coin={item}/>)*/}
+              {/*:*/}
+              {/*""*/}
+          {/*}*/}
 
         </SelectedCoins>
       </Container>
