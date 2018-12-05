@@ -141,7 +141,7 @@ export const SecondRow = styled.div`
 
 export const PriceChangeBox = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: start;
   margin: 1.5625rem 0  1.4375rem 0.3125rem;
   width: 30%;
@@ -155,4 +155,9 @@ export const PriceChangeBox = styled.div`
 `;
 
 export const ButtonRefresh = styled.button`
+`;
+
+export const SinglePriceChange = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

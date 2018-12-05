@@ -11,36 +11,41 @@ import {
   SecondRow,
   PriceChangeBox,
   PriceChangeTitle,
-  ButtonRefresh
+  ButtonRefresh,
+  SinglePriceChange
 } from "./style";
 
-class CoinDetails extends React.Component{
-  render() {
-  return (
+const CoinDetails = ({onClick, coin }) =>
+
   <Container>
       <Mask >
         <CoinBox>
           <FirstRow>
             <CoinPair>
-              {this.props.coin.name}
+              {coin.name}
             </CoinPair>
             <PriceChangeBox>
-              <ButtonRefresh onClick={() => this.props.onClick(this.props.coin.id)}>refresh</ButtonRefresh>
+              <SinglePriceChange>
               <PriceChangeTitle>7d:</PriceChangeTitle>
-            <PriceChangeCoin changeType={handlePriceChange(this.props.coin.quotes.USD.percent_change_7d)} >
-              {this.props.coin.quotes.USD.percent_change_7d}%</PriceChangeCoin>
+            <PriceChangeCoin changeType={handlePriceChange(coin.quotes.USD.percent_change_7d)} >
+              {coin.quotes.USD.percent_change_7d}%</PriceChangeCoin>
+              </SinglePriceChange>
+              <SinglePriceChange>
               <PriceChangeTitle> 24h:</PriceChangeTitle>
-            <PriceChangeCoin changeType={handlePriceChange(this.props.coin.quotes.USD.percent_change_24h)} >
-             {this.props.coin.quotes.USD.percent_change_24h}%</PriceChangeCoin>
+            <PriceChangeCoin changeType={handlePriceChange(coin.quotes.USD.percent_change_24h)} >
+             {coin.quotes.USD.percent_change_24h}%</PriceChangeCoin>
+              </SinglePriceChange>
+              {/*<Icon onClick={() => onClick(coin.id)} icon={refreshing}>refresh</Icon>*/}
+              <li onClick={() => onClick(coin.id)} className="ion-refreshing" data-pack="default" data-tags="reload, renew, animation"
+                  data-animation="true"></li>
             </PriceChangeBox>
           </FirstRow>
           <SecondRow>
-            <FiatPrice>{this.props.coin.quotes.USD.price}$</FiatPrice>
+            <FiatPrice>{coin.quotes.USD.price}$</FiatPrice>
           </SecondRow>
         </CoinBox>
       </Mask>
-  </Container>
-);}}
+  </Container>;
 
 function handlePriceChange(change) {
   if (change > 0) {
