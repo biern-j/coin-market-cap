@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "./App.css";
-import CoinInput from "./Components/coinInput";
-import coinMarketCapData from "./app-data/coin-checker";
+import CoinInput from "./Components/coin-input";
+import coinMarketCapData from "./app-coin-data-processing/coin-output";
 import CoinDetails from "./Components/coin-details";
-import { fetchAppData } from "./app-data/data-processing";
+import { fetchAppData } from "./app-coin-data-processing/coin-data-fetching";
 
 const Container = styled.div`
   display: flex;

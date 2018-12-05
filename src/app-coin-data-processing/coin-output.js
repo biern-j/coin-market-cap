@@ -2,7 +2,7 @@ import {
   fetchAppData,
   getPostAppForCoin,
   findListingCoin
-} from "./data-processing";
+} from "./coin-data-fetching";
 
 export default function coinMarketCapData(coin, listings) {
   const foundListingCoin = findListingCoin(listings, coin);
