@@ -113,25 +113,18 @@ class App extends Component {
   };
 
   render() {
-    console.log(
-      "coin list",
-      this.state.selectedCoins,
-      "all data",
-      this.state.coinsData,
-      "coin details", this.state.selectedCoinDetails
-    );
-
     return (
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin} />
-        <SelectedCoins>
-          {this.state.selectedCoinDetails !== "" ?
-            (<ThemeProvider theme={themeCoinPairTile}>
-              <CoinDetails coin={this.state.selectedCoinDetails.coinTicker} />
-            </ThemeProvider>)
-            :
-            ""}
-        </SelectedCoins>
+        {/*<SelectedCoins>*/}
+          {/*{this.state.selectedCoinDetails !== "" ?*/}
+            {/*(<ThemeProvider theme={themeCoinPairTile}>*/}
+              {/*<CoinDetails*/}
+                {/*coin={this.state.selectedCoinDetails.coinTicker} />*/}
+            {/*</ThemeProvider>)*/}
+            {/*:*/}
+            {/*""}*/}
+        {/*</SelectedCoins>*/}
         {this.state.selectedCoins !== [] ?
           this.state.selectedCoins.map(item =>
             (<ThemeProvider theme={themeCoinPairTile}>

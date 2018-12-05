@@ -19,8 +19,10 @@ const CoinDetails = ({ coin }) => (
             <CoinPair>
               {coin.name}
             </CoinPair>
-            <PriceChange changeType="constant" >7d: {coin.quotes.USD.percent_change_7d}%</PriceChange>
-            <PriceChange changeType="constant" >24h: {coin.quotes.USD.percent_change_24h}%</PriceChange>
+            <PriceChange changeType={handlePriceChange(coin.quotes.USD.percent_change_7d)} >
+              7d: {coin.quotes.USD.percent_change_7d}%</PriceChange>
+            <PriceChange changeType={handlePriceChange(coin.quotes.USD.percent_change_24h)} >
+              24h: {coin.quotes.USD.percent_change_24h}%</PriceChange>
           </FirstRow>
           <SecondRow>
             <FiatPrice>{coin.quotes.USD.price}$</FiatPrice>
@@ -29,5 +31,17 @@ const CoinDetails = ({ coin }) => (
       </Mask>
   </Container>
 );
+
+function handlePriceChange(change) {
+  console.log("price", change);
+  switch (change) {
+    case change > 0:
+      return "rise";
+    case change < 0:
+      return "fall";
+    default:
+      return "constant";
+  }
+}
 
 export default CoinDetails;

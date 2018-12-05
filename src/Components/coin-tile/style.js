@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Typography from "@material-ui/core/Typography";
 
 const setChangeColor = props => {
   const { color } = props.theme;
