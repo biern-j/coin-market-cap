@@ -1,5 +1,6 @@
 import React from "react";
-
+import { Icon } from 'react-icons-kit';
+import {loop2} from 'react-icons-kit/icomoon/loop2'
 import {
   Mask,
   CoinPair,
@@ -35,9 +36,7 @@ const CoinDetails = ({onClick, coin }) =>
             <PriceChangeCoin changeType={handlePriceChange(coin.quotes.USD.percent_change_24h)} >
              {coin.quotes.USD.percent_change_24h}%</PriceChangeCoin>
               </SinglePriceChange>
-              {/*<Icon onClick={() => onClick(coin.id)} icon={refreshing}>refresh</Icon>*/}
-              <li onClick={() => onClick(coin.id)} className="ion-refreshing" data-pack="default" data-tags="reload, renew, animation"
-                  data-animation="true"></li>
+              <Icon onClick={() => onClick(coin.id)} icon={loop2}/>
             </PriceChangeBox>
           </FirstRow>
           <SecondRow>
