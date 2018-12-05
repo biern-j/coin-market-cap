@@ -5,7 +5,7 @@ import "./App.css";
 import CoinInput from "./Components/coin-input";
 import coinMarketCapData from "./app-coin-data-processing/coin-output";
 import CoinDetails from "./Components/coin-tile/coin-details";
-import { fetchAppData } from "./app-coin-data-processing/coin-data-fetching";
+import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
 
 const Container = styled.div`
   display: flex;
@@ -83,12 +83,6 @@ class App extends Component {
         this.setState({ coinsData: await fetchAppData(listings) });
       }
 
-      const reducer = (acc, current) => {
-        return {...acc, [current.coinTicker.id]: current.coinTicker};
-      };
-      const reduceTest =this.state.selectedCoins.reduce(reducer,{});
-      console.log("reducer", reduceTest);
-
       const result = await coinMarketCapData(coin, this.state.coinsData);
       const checkCoin = this.state.selectedCoins.find(item =>
         item.coinTicker.id === result.coinTicker.id);
@@ -96,10 +90,10 @@ class App extends Component {
       this.setState(
         state => (
           {
-          selectedCoinDetails: result,
-          counter: state.counter + 1,
-          selectedCoins: checkCoin ? state.selectedCoins : [...state.selectedCoins, result]
-        }),
+            selectedCoinDetails: result,
+            counter: state.counter + 1,
+            selectedCoins: checkCoin ? state.selectedCoins : [...state.selectedCoins, result]
+          }),
         () => {
           saveLocal(
             ["coinData", this.state.coinsData],
@@ -112,30 +106,50 @@ class App extends Component {
     }
   };
 
+  updateSelectedCoin =async id => {
+    const fetchParams = {
+      address: getPostAppForCoin(id),
+      errorMessage: ""
+    };
+    const data = fetchAppData(fetchParams);
+    const idStructreCoin = reduceTest(this.state.selectedCoins);
+    console.log("tile to change", idStructreCoin);
+
+
+
+
+  };
+
   render() {
+    const sortSelectedCoins = this.state.selectedCoins.sort("market_cap");
+    console.log("sorted", sortSelectedCoins);
     return (
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin} />
         {/*<SelectedCoins>*/}
-          {/*{this.state.selectedCoinDetails !== "" ?*/}
-            {/*(<ThemeProvider theme={themeCoinPairTile}>*/}
-              {/*<CoinDetails*/}
-                {/*coin={this.state.selectedCoinDetails.coinTicker} />*/}
-            {/*</ThemeProvider>)*/}
-            {/*:*/}
-            {/*""}*/}
+        {/*{this.state.selectedCoinDetails !== "" ?*/}
+        {/*(<ThemeProvider theme={themeCoinPairTile}>*/}
+        {/*<CoinDetails*/}
+        {/*coin={this.state.selectedCoinDetails.coinTicker} />*/}
+        {/*</ThemeProvider>)*/}
+        {/*:*/}
+        {/*""}*/}
         {/*</SelectedCoins>*/}
         {this.state.selectedCoins !== [] ?
           this.state.selectedCoins.map(item =>
             (<ThemeProvider theme={themeCoinPairTile}>
-                <CoinDetails key={item.coinTicker.id} coin={item.coinTicker} />
+                <CoinDetails key={item.coinTicker.id} onClick={this.updateSelectedCoin} coin={item.coinTicker} />
               </ThemeProvider>
-              ))
+            ))
           :
           []}
       </Container>
     );
   }
 }
+const reducer = (acc, current) => {
+  return {...acc, [current.coinTicker.id]: current.coinTicker};
+};
+const reduceTest = (arr) => arr.reduce(reducer,{});
 
 export default App;

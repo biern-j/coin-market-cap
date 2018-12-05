@@ -3,37 +3,46 @@ import React from "react";
 import {
   Mask,
   CoinPair,
-  PriceChange,
+  PriceChangeCoin,
   FiatPrice,
   CoinBox,
   Container,
   FirstRow,
-  SecondRow
+  SecondRow,
+  PriceChangeBox,
+  PriceChangeTitle,
+  ButtonRefresh
 } from "./style";
 
-const CoinDetails = ({ coin }) => (
+class CoinDetails extends React.Component{
+  render() {
+  return (
   <Container>
       <Mask >
         <CoinBox>
           <FirstRow>
             <CoinPair>
-              {coin.name}
+              {this.props.coin.name}
             </CoinPair>
-            <PriceChange changeType={handlePriceChange(coin.quotes.USD.percent_change_7d)} >
-              7d: {coin.quotes.USD.percent_change_7d}%</PriceChange>
-            <PriceChange changeType={handlePriceChange(coin.quotes.USD.percent_change_24h)} >
-              24h: {coin.quotes.USD.percent_change_24h}%</PriceChange>
+            <PriceChangeBox>
+              <ButtonRefresh onClick={() => this.props.onClick(this.props.coin.id)}>refresh</ButtonRefresh>
+              <PriceChangeTitle>7d:</PriceChangeTitle>
+            <PriceChangeCoin changeType={handlePriceChange(this.props.coin.quotes.USD.percent_change_7d)} >
+              {this.props.coin.quotes.USD.percent_change_7d}%</PriceChangeCoin>
+              <PriceChangeTitle> 24h:</PriceChangeTitle>
+            <PriceChangeCoin changeType={handlePriceChange(this.props.coin.quotes.USD.percent_change_24h)} >
+             {this.props.coin.quotes.USD.percent_change_24h}%</PriceChangeCoin>
+            </PriceChangeBox>
           </FirstRow>
           <SecondRow>
-            <FiatPrice>{coin.quotes.USD.price}$</FiatPrice>
+            <FiatPrice>{this.props.coin.quotes.USD.price}$</FiatPrice>
           </SecondRow>
         </CoinBox>
       </Mask>
   </Container>
-);
+);}}
 
 function handlePriceChange(change) {
-  console.log("price", change);
   if (change > 0) {
     return "rise";
   }

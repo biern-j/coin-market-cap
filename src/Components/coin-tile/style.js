@@ -90,7 +90,7 @@ export const FiatPrice = styled.span`
   margin: 0 3rem 1.5625rem 0.75rem;
   padding: 0.25rem 0;
   font-family: Roboto, sans-serif;
-  font-size: ${props => props.theme.fontSize.smaller};
+  font-size: ${props => props.theme.fontSize.large};
   color: ${props => props.theme.color.secondary};
 
   @media screen and (max-width: 414px) {
@@ -99,7 +99,7 @@ export const FiatPrice = styled.span`
   }
 `;
 
-export const VolumeTitle = styled.div`
+export const PriceChangeTitle = styled.div`
   font-family: Roboto, sans-serif;
   font-size: ${props => props.theme.fontSize.smaller};
   color: ${props => props.theme.color.primary};
@@ -112,11 +112,11 @@ export const VolumeTitle = styled.div`
   }
 `;
 
-export const VolumeCoin = styled.div`
+export const PriceChangeCoin = styled.div`
   font-family: Roboto, sans-serif;
   font-size: ${props => props.theme.fontSize.small};
   line-height: 1.5;
-  color: ${props => props.theme.color.primary};
+  color: ${setChangeColor};
 `;
 
 export const CoinBox = styled.div`
@@ -139,7 +139,7 @@ export const SecondRow = styled.div`
   flex-direction: row;
 `;
 
-export const VolumeBox = styled.div`
+export const PriceChangeBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -152,4 +152,7 @@ export const VolumeBox = styled.div`
     margin: 0 0 0.5625rem 1.125rem;
     min-width: 118px;
   }
+`;
+
+export const ButtonRefresh = styled.button`
 `;
