@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { ThemeProvider } from "styled-components";
 import "./App.css";
 import CoinInput from "./Components/coin-input";
 import coinMarketCapData from "./app-coin-data-processing/coin-output";
-import CoinDetails from "./Components/coin-details";
+import CoinDetails from "./Components/coin-tile/coin-details";
 import { fetchAppData } from "./app-coin-data-processing/coin-data-fetching";
 
 const Container = styled.div`
@@ -16,6 +17,23 @@ const Container = styled.div`
 const SelectedCoins = styled.div`
   color: #61dafb;
 `;
+
+const themeCoinPairTile = {
+  fontSize: {
+    large: "1.625em",
+    middle: "1.1875em",
+    smaller: "1em",
+    small: "0.875em"
+  },
+  color: {
+    rise: "rgb(28,179,145)",
+    fall: "rgb(255,69,92)",
+    constant: "rgb(47,79,79)",
+    primary: "rgb(255,255,255)",
+    secondary: "rgb(254,255,184)"
+  }
+};
+
 
 const CoinInputStyle = styled(CoinInput)``;
 
@@ -108,13 +126,18 @@ class App extends Component {
         <CoinInputStyle onChange={this.handleSelectedCoin} />
         <SelectedCoins>
           {this.state.selectedCoinDetails !== "" ?
-            (<CoinDetails coin={this.state.selectedCoinDetails.coinTicker} />)
+            (<ThemeProvider theme={themeCoinPairTile}>
+              <CoinDetails coin={this.state.selectedCoinDetails.coinTicker} />
+            </ThemeProvider>)
             :
             ""}
         </SelectedCoins>
         {this.state.selectedCoins !== [] ?
           this.state.selectedCoins.map(item =>
-            (<CoinDetails key={item.coinTicker.id} coin={item.coinTicker} />))
+            (<ThemeProvider theme={themeCoinPairTile}>
+                <CoinDetails key={item.coinTicker.id} coin={item.coinTicker} />
+              </ThemeProvider>
+              ))
           :
           []}
       </Container>
@@ -123,16 +146,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-// [{"coinTicker":{"id":1027,
-//     "name":"Ethereum","symbol":"ETH",
-//     "website_slug":"ethereum","rank":3,
-//     "circulating_supply":103576437,
-//     "total_supply":103576437,
-//     "max_supply":null,
-//     "quotes":{"USD":{"price":113.67611992,
-//         "volume_24h":1794834913.61305,
-//         "market_cap":11774167530,
-//         "percent_change_1h":0,"percent_change_24h":-2.79,"percent_change_7d":1.92}},
-//     "last_updated":1543848018}}]
