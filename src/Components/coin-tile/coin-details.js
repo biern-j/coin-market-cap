@@ -34,14 +34,13 @@ const CoinDetails = ({ coin }) => (
 
 function handlePriceChange(change) {
   console.log("price", change);
-  switch (change) {
-    case change > 0:
-      return "rise";
-    case change < 0:
-      return "fall";
-    default:
-      return "constant";
+  if (change > 0) {
+    return "rise";
   }
+  if (change < 0) {
+    return "fall"
+  }
+  return "constant";
 }
 
 export default CoinDetails;
