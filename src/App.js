@@ -60,7 +60,7 @@ class App extends Component {
     selectedCoinDetails: "",
     coinsData: {},
     counter: 0,
-    selectedCoins: []
+    selectedCoins: {}
   };
 
   async componentDidMount() {
@@ -84,15 +84,17 @@ class App extends Component {
       }
 
       const result = await coinMarketCapData(coin, this.state.coinsData);
-      const uniqueStorageCoin = this.state.selectedCoins.find(item =>
-        item.coinTicker.id === result.coinTicker.id);
+
+      const uniqueStorageCoin = Object.values(this.state.selectedCoins).find(item =>
+        item.id === result.coinTicker.id);
 
       this.setState(
         state => (
           {
             selectedCoinDetails: result,
             counter: state.counter + 1,
-            selectedCoins: uniqueStorageCoin ? state.selectedCoins : [...this.state.selectedCoins, result]
+            selectedCoins: uniqueStorageCoin ?
+              state.selectedCoins : {...state.selectedCoins, [result.coinTicker.id]: result.coinTicker}
           }),
         () => {
           saveLocal(
@@ -113,9 +115,9 @@ class App extends Component {
     };
     const data = await fetchAppData(fetchParams);
 
-    const resultUpdate = this.state.selectedCoins.map(item => {
-      if (item.coinTicker.id === id) {
-        item.coinTicker = data.data;
+    const resultUpdate = Object.values(this.state.selectedCoins).map(item => {
+      if (item.id === id) {
+        item = data.data;
       }
       return item;
     });
@@ -123,23 +125,15 @@ class App extends Component {
   };
 
   render() {
+
     console.log("storage", this.state.selectedCoins);
     return (
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin} />
-        {/*<SelectedCoins>*/}
-        {/*{this.state.selectedCoinDetails !== "" ?*/}
-        {/*(<ThemeProvider theme={themeCoinPairTile}>*/}
-        {/*<CoinDetails*/}
-        {/*coin={this.state.selectedCoinDetails.coinTicker} />*/}
-        {/*</ThemeProvider>)*/}
-        {/*:*/}
-        {/*""}*/}
-        {/*</SelectedCoins>*/}
-        {this.state.selectedCoins !== [] ?
-          this.state.selectedCoins.map(item =>
-            (<ThemeProvider key={item.coinTicker.id} theme={themeCoinPairTile}>
-                <CoinDetails  onClick={this.updateSelectedCoin} coin={item.coinTicker} />
+        {this.state.selectedCoins !== {} ?
+          Object.values(this.state.selectedCoins).map(item =>
+            (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
+                <CoinDetails  onClick={this.updateSelectedCoin} coin={item} />
               </ThemeProvider>
             ))
           :
@@ -148,9 +142,5 @@ class App extends Component {
     );
   }
 }
-const reducer = (acc, current) => {
-  return {...acc, [current.coinTicker.id]: current.coinTicker};
-};
-const storageCoinsID = (arr) => arr.reduce(reducer,{});
 
 export default App;
