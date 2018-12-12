@@ -76,8 +76,9 @@ class App extends Component {
     counter: 0,
     selectedCoins: {},
     selectedCoinToCompare: {},
-    firstCoinToCompare: false,
-    coinsToCompare: []
+    coinsToCompare: [],
+    selectedCoinToCompare1: {},
+    selectedCoinToCompare2: {}
   };
 
   async componentDidMount() {
@@ -142,7 +143,22 @@ class App extends Component {
   };
 
   setCoinToCompare = (coin) => {
-    this.setState({selectedCoinToCompare: coin, firstCoinToCompare: !this.state.firstCoinToCompare});
+    console.log("coin1", coin.name);
+    if (this.state.selectedCoinToCompare1.name === undefined) {
+      this.setState({selectedCoinToCompare1: coin, selectedCoinToCompare2: this.state.selectedCoinToCompare2 });
+    }
+    if (this.state.selectedCoinToCompare2.name === undefined) {
+      this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: coin});
+    }
+    if (this.state.selectedCoinToCompare1.name === coin.name) {
+      this.setState({selectedCoinToCompare1: {}});
+    }if (this.state.selectedCoinToCompare2.name === coin.name) {
+      this.setState({selectedCoinToCompare2: {}});
+    }
+    // this.setState({
+    //   selectedCoinToCompare1: this.state.selectedCoinToCompare1.name === coin.name ? {} : coin,
+    //   selectedCoinToCompare2: this.state.selectedCoinToCompare2.name === coin.name ? {} : coin
+    // })
   };
 
   handleSelectedCoinToCompare = (coins) => {
@@ -152,23 +168,16 @@ class App extends Component {
 
   render() {
 
-    console.log("storage", this.state.selectedCoins, "coinsToCompare", this.state.coinsToCompare);
+    console.log("storage", this.state.selectedCoins, "coinsToCompare1", this.state.selectedCoinToCompare );
     return (
       <Container>
         <Inputs>
           <CoinInputStyle onChange={this.handleSelectedCoin} />
           <CoinCompareInput
-            coinToCompare1={
-              this.state.firstCoinToCompare ?
-                this.state.selectedCoinToCompare
-                :
-                ""}
-            coinToCompare2={
-              !this.state.firstCoinToCompare
-                ?
-                this.state.selectedCoinToCompare
-                :
-                "" } coinsToCompare={this.handleSelectedCoinToCompare}/>
+            coinToCompare1={this.state.selectedCoinToCompare1}
+            coinToCompare2={this.state.selectedCoinToCompare2}
+            // coinsToCompare={this.handleSelectedCoinToCompare}
+          />
           {/*<CompareCoinResult coinToComparison={this.state.coinsToCompare}/>*/}
         </Inputs>
         <CoinTiles>

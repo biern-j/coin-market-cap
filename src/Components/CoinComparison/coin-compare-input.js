@@ -57,51 +57,16 @@ const Inputs = styled.div`
   }
 `;
 
-class CoinCompareInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { coin1: "", coin2: "" };
-  }
-
-  handleChangeCoin1 = (e) => {
-    this.setState({ coin1: e.target.value });
-  };
-
-  handleChangeCoin2 = (e) => {
-    this.setState({ coin2: e.target.value });
-    this.props.coinsToCompare([this.state.coin1, this.state.coin2]);
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    //this.props.onChange(this.state.value);
-    this.setState({coin1: "", coin2: ""});
-  };
-
-  render() {
-    return (
-      <FormContainer onSubmit={this.handleSubmit}>
-        <Inputs>
-          <Coin
-            placeholder="coin 1"
-            value={this.props.coinToCompare1.name}
-            onChange={this.handleChangeCoin1}
-          />
-          <Coin
-            placeholder="coin 2"
-            value={this.props.coinToCompare2.name}
-            onChange={this.handleChangeCoin2}
-          />
-          <CoinSubmit
-            type="submit"
-            value="Submit"
-            disabled={this.state.value  === ""}
-          >
-          </CoinSubmit>
-        </Inputs>
-      </FormContainer>
-    )
-  }
-};
+const CoinCompareInput = ({ coinToCompare1, coinToCompare2 }) =>
+  <FormContainer>
+    <Inputs>
+      <Coin
+        placeholder={coinToCompare1.name}
+      />
+      <Coin
+        placeholder={coinToCompare2.name}
+      />
+    </Inputs>
+  </FormContainer>;
 
 export default CoinCompareInput;
