@@ -14,7 +14,6 @@ const setChangeColor = props => {
 
 export const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
   padding: 6.8125rem 15.625rem 2.75rem 15.0625rem;
 
   @media screen and (max-width: 414px) {
@@ -50,7 +49,7 @@ export const Mask = styled.div`
   }
 `;
 
-export const CoinPair = styled.div`
+export const CoinName = styled.div`
   flex: 1 1 fit-content;
   font-family: Roboto, sans-serif;
   font-size: ${props => props.theme.fontSize.large};
@@ -152,9 +151,6 @@ export const PriceChangeBox = styled.div`
     margin: 0 0 0.5625rem 1.125rem;
     min-width: 118px;
   }
-`;
-
-export const ButtonRefresh = styled.button`
 `;
 
 export const SinglePriceChange = styled.div`

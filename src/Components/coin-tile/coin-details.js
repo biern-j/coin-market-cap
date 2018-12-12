@@ -3,28 +3,24 @@ import { Icon } from 'react-icons-kit';
 import {loop2} from 'react-icons-kit/icomoon/loop2'
 import {
   Mask,
-  CoinPair,
+  CoinName,
   PriceChangeCoin,
   FiatPrice,
   CoinBox,
-  Container,
   FirstRow,
   SecondRow,
   PriceChangeBox,
   PriceChangeTitle,
-  ButtonRefresh,
   SinglePriceChange
 } from "./style";
 
 const CoinDetails = ({onClick, coin }) =>
-
-  <Container>
       <Mask >
         <CoinBox>
           <FirstRow>
-            <CoinPair>
+            <CoinName>
               {coin.name}
-            </CoinPair>
+            </CoinName>
             <PriceChangeBox>
               <SinglePriceChange>
               <PriceChangeTitle>7d:</PriceChangeTitle>
@@ -43,8 +39,7 @@ const CoinDetails = ({onClick, coin }) =>
             <FiatPrice>{coin.quotes.USD.price}$</FiatPrice>
           </SecondRow>
         </CoinBox>
-      </Mask>
-  </Container>;
+      </Mask>;
 
 function handlePriceChange(change) {
   if (change > 0) {

@@ -9,13 +9,15 @@ import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const SelectedCoins = styled.div`
-  color: #61dafb;
+const CoinTiles = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+ flex-basis: fit-content;
 `;
 
 const themeCoinPairTile = {
@@ -130,6 +132,7 @@ class App extends Component {
     return (
       <Container>
         <CoinInputStyle onChange={this.handleSelectedCoin} />
+        <CoinTiles>
         {this.state.selectedCoins !== {} ?
           Object.values(this.state.selectedCoins).map(item =>
             (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
@@ -138,6 +141,7 @@ class App extends Component {
             ))
           :
           {}}
+        </CoinTiles>
       </Container>
     );
   }
