@@ -6,6 +6,8 @@ import CoinInput from "./Components/coin-input";
 import coinMarketCapData from "./app-coin-data-processing/coin-output";
 import CoinDetails from "./Components/coin-tile/coin-details";
 import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
+import CoinCompareInput from "./Components/CoinComparison/coin-compare-input";
+import CoinComparison from "./Components/CoinComparison/coin-comparison";
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +20,16 @@ const CoinTiles = styled.div`
   display: flex;
   flex-wrap: wrap;
  flex-basis: fit-content;
+`;
+
+const Inputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  
+`;
+
+const CompareCoinResult = styled(CoinComparison)`
+  
 `;
 
 const themeCoinPairTile = {
@@ -62,7 +74,10 @@ class App extends Component {
     selectedCoinDetails: "",
     coinsData: {},
     counter: 0,
-    selectedCoins: {}
+    selectedCoins: {},
+    selectedCoinToCompare: {},
+    firstCoinToCompare: false,
+    coinsToCompare: []
   };
 
   async componentDidMount() {
@@ -126,21 +141,45 @@ class App extends Component {
     this.setState({ selectedCoins: resultUpdate });
   };
 
+  setCoinToCompare = (coin) => {
+    this.setState({selectedCoinToCompare: coin, firstCoinToCompare: !this.state.firstCoinToCompare});
+  };
+
+  handleSelectedCoinToCompare = (coins) => {
+    console.log("coin", coins);
+    this.setState({coinsToCompare: coins})
+  };
+
   render() {
 
-    console.log("storage", this.state.selectedCoins);
+    console.log("storage", this.state.selectedCoins, "coinsToCompare", this.state.coinsToCompare);
     return (
       <Container>
-        <CoinInputStyle onChange={this.handleSelectedCoin} />
+        <Inputs>
+          <CoinInputStyle onChange={this.handleSelectedCoin} />
+          <CoinCompareInput
+            coinToCompare1={
+              this.state.firstCoinToCompare ?
+                this.state.selectedCoinToCompare
+                :
+                ""}
+            coinToCompare2={
+              !this.state.firstCoinToCompare
+                ?
+                this.state.selectedCoinToCompare
+                :
+                "" } coinsToCompare={this.handleSelectedCoinToCompare}/>
+          {/*<CompareCoinResult coinToComparison={this.state.coinsToCompare}/>*/}
+        </Inputs>
         <CoinTiles>
-        {this.state.selectedCoins !== {} ?
-          Object.values(this.state.selectedCoins).map(item =>
-            (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
-                <CoinDetails  onClick={this.updateSelectedCoin} coin={item} />
-              </ThemeProvider>
-            ))
-          :
-          {}}
+          {this.state.selectedCoins !== {} ?
+            Object.values(this.state.selectedCoins).map(item =>
+              (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
+                  <CoinDetails coinToCompare={this.setCoinToCompare} onClick={this.updateSelectedCoin} coin={item} />
+                </ThemeProvider>
+              ))
+            :
+            {}}
         </CoinTiles>
       </Container>
     );

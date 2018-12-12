@@ -14,8 +14,8 @@ import {
   SinglePriceChange
 } from "./style";
 
-const CoinDetails = ({onClick, coin }) =>
-      <Mask >
+const CoinDetails = ({coinToCompare, onClick, coin }) =>
+      <Mask onClick={() => coinToCompare(coin)}>
         <CoinBox>
           <FirstRow>
             <CoinName>
