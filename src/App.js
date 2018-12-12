@@ -145,20 +145,16 @@ class App extends Component {
   setCoinToCompare = (coin) => {
     console.log("coin1", coin.name);
     if (this.state.selectedCoinToCompare1.name === undefined) {
-      this.setState({selectedCoinToCompare1: coin, selectedCoinToCompare2: this.state.selectedCoinToCompare2 });
+      this.setState({selectedCoinToCompare1: coin, selectedCoinToCompare2: this.state.selectedCoinToCompare2, coinsToCompare: coin });
     }
     if (this.state.selectedCoinToCompare2.name === undefined) {
-      this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: coin});
+      this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: coin, coinsToCompare: coin});
     }
     if (this.state.selectedCoinToCompare1.name === coin.name) {
-      this.setState({selectedCoinToCompare1: {}});
+      this.setState({selectedCoinToCompare1: {},selectedCoinToCompare2: this.state.selectedCoinToCompare2});
     }if (this.state.selectedCoinToCompare2.name === coin.name) {
-      this.setState({selectedCoinToCompare2: {}});
+      this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: {}});
     }
-    // this.setState({
-    //   selectedCoinToCompare1: this.state.selectedCoinToCompare1.name === coin.name ? {} : coin,
-    //   selectedCoinToCompare2: this.state.selectedCoinToCompare2.name === coin.name ? {} : coin
-    // })
   };
 
   handleSelectedCoinToCompare = (coins) => {
@@ -168,7 +164,7 @@ class App extends Component {
 
   render() {
 
-    console.log("storage", this.state.selectedCoins, "coinsToCompare1", this.state.selectedCoinToCompare );
+    console.log("storage", this.state.selectedCoins );
     return (
       <Container>
         <Inputs>
@@ -176,7 +172,6 @@ class App extends Component {
           <CoinCompareInput
             coinToCompare1={this.state.selectedCoinToCompare1}
             coinToCompare2={this.state.selectedCoinToCompare2}
-            // coinsToCompare={this.handleSelectedCoinToCompare}
           />
           {/*<CompareCoinResult coinToComparison={this.state.coinsToCompare}/>*/}
         </Inputs>
