@@ -28,6 +28,7 @@ const CoinSubmit = styled.button`
 
 const FormContainer = styled.form`
   display: flex;
+  flex-direction: column;
   align-content: center;
 `;
 
@@ -67,6 +68,9 @@ const CoinCompareInput = ({ coinToCompare1, coinToCompare2 }) =>
         placeholder={coinToCompare2.name}
       />
     </Inputs>
+    {coinToCompare1.name !== undefined && coinToCompare2.name !== undefined ? (
+      <Coin placeholder={`${coinToCompare1.quotes.USD.price / coinToCompare2.quotes.USD.price }$`} />
+    ) : ""}
   </FormContainer>;
 
 export default CoinCompareInput;

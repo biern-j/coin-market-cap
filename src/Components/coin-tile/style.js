@@ -100,10 +100,11 @@ export const FiatPrice = styled.span`
 
 export const PriceChangeTitle = styled.div`
   font-family: Roboto, sans-serif;
+   font-weight: bold;
   font-size: ${props => props.theme.fontSize.smaller};
   color: ${props => props.theme.color.primary};
   padding: 0.25rem 0;
-  margin-top: 0.25rem;
+  margin: 0.25rem;
 
   @media screen and (max-width: 414px) {
     margin-bottom: 0.125rem;
@@ -113,9 +114,11 @@ export const PriceChangeTitle = styled.div`
 
 export const PriceChangeCoin = styled.div`
   font-family: Roboto, sans-serif;
-  font-size: ${props => props.theme.fontSize.small};
+   font-weight: bold;
+  font-size: ${props => props.theme.fontSize.large};
   line-height: 1.5;
   color: ${setChangeColor};
+  margin: 0.25rem;
 `;
 
 export const CoinBox = styled.div`
@@ -140,7 +143,6 @@ export const SecondRow = styled.div`
 
 export const PriceChangeBox = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: start;
   margin: 1.5625rem 0  1.4375rem 0.3125rem;
   width: 30%;

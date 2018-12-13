@@ -7,7 +7,6 @@ import coinMarketCapData from "./app-coin-data-processing/coin-output";
 import CoinDetails from "./Components/coin-tile/coin-details";
 import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
 import CoinCompareInput from "./Components/CoinComparison/coin-compare-input";
-import CoinComparison from "./Components/CoinComparison/coin-comparison";
 
 const Container = styled.div`
   display: flex;
@@ -28,10 +27,6 @@ const Inputs = styled.div`
   
 `;
 
-const CompareCoinResult = styled(CoinComparison)`
-  
-`;
-
 const themeCoinPairTile = {
   fontSize: {
     large: "1.625em",
@@ -40,7 +35,7 @@ const themeCoinPairTile = {
     small: "0.875em"
   },
   color: {
-    rise: "rgb(28,179,145)",
+    rise: "rgb(0,128,0)",
     fall: "rgb(255,69,92)",
     constant: "rgb(47,79,79)",
     primary: "rgb(255,255,255)",
@@ -151,7 +146,7 @@ class App extends Component {
       this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: coin, coinsToCompare: coin});
     }
     if (this.state.selectedCoinToCompare1.name === coin.name) {
-      this.setState({selectedCoinToCompare1: {},selectedCoinToCompare2: this.state.selectedCoinToCompare2});
+      this.setState({selectedCoinToCompare1: {}, selectedCoinToCompare2: this.state.selectedCoinToCompare2});
     }if (this.state.selectedCoinToCompare2.name === coin.name) {
       this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: {}});
     }
@@ -173,7 +168,6 @@ class App extends Component {
             coinToCompare1={this.state.selectedCoinToCompare1}
             coinToCompare2={this.state.selectedCoinToCompare2}
           />
-          {/*<CompareCoinResult coinToComparison={this.state.coinsToCompare}/>*/}
         </Inputs>
         <CoinTiles>
           {this.state.selectedCoins !== {} ?
