@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import {thickRight} from 'react-icons-kit/iconic/thickRight';
-import { Icon } from 'react-icons-kit';
 
 const Coin = styled.input`
   flex-grow: 1;
@@ -11,18 +9,6 @@ const Coin = styled.input`
   vertical-align: middle;
   border-style: none;
   background: transparent;
-  outline: none;
-`;
-
-const CoinSubmit = styled.button`
-  color: #7881A1;
-  font-size: 2.4rem;
-  line-height: 2.4rem;
-  vertical-align: middle;
-  transition: color .25s; 
-  padding: 0;
-  background: none;
-  border: none;
   outline: none;
 `;
 
@@ -58,19 +44,23 @@ const Inputs = styled.div`
   }
 `;
 
-const CoinCompareInput = ({ coinToCompare1, coinToCompare2 }) =>
+const CoinCompareInput = ({ coinToCompare }) =>
   <FormContainer>
     <Inputs>
       <Coin
-        placeholder={coinToCompare1.name}
+        placeholder={coinToCompare.base.name}
       />
       <Coin
-        placeholder={coinToCompare2.name}
+        placeholder={coinToCompare.quote.name}
       />
     </Inputs>
-    {coinToCompare1.name !== undefined && coinToCompare2.name !== undefined ? (
-      <Coin placeholder={`${coinToCompare1.quotes.USD.price / coinToCompare2.quotes.USD.price }$`} />
-    ) : ""}
+    {coinToCompare.base.name !== undefined && coinToCompare.quote.name !== undefined ?
+      (<Coin
+        placeholder={`${coinToCompare.base.quotes.USD.price / coinToCompare.quote.quotes.USD.price }$`}
+      />)
+      :
+      ""
+    }
   </FormContainer>;
 
 export default CoinCompareInput;

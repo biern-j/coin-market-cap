@@ -70,10 +70,7 @@ class App extends Component {
     coinsData: {},
     counter: 0,
     selectedCoins: {},
-    selectedCoinToCompare: {},
-    coinsToCompare: [],
-    selectedCoinToCompare1: {},
-    selectedCoinToCompare2: {}
+    coinToCompare: {base: {}, quote: {}}
   };
 
   async componentDidMount() {
@@ -138,42 +135,37 @@ class App extends Component {
   };
 
   setCoinToCompare = (coin) => {
-    console.log("coin1", coin.name);
-    if (this.state.selectedCoinToCompare1.name === undefined) {
-      this.setState({selectedCoinToCompare1: coin, selectedCoinToCompare2: this.state.selectedCoinToCompare2, coinsToCompare: coin });
+    const { base, quote } = this.state.coinToCompare;
+    if (base.name === undefined) {
+      this.setState({coinToCompare: { base: coin, quote: quote }});
     }
-    if (this.state.selectedCoinToCompare2.name === undefined) {
-      this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: coin, coinsToCompare: coin});
+    if (quote.name === undefined) {
+      this.setState({ coinToCompare: { base: base, quote: coin }});
     }
-    if (this.state.selectedCoinToCompare1.name === coin.name) {
-      this.setState({selectedCoinToCompare1: {}, selectedCoinToCompare2: this.state.selectedCoinToCompare2});
-    }if (this.state.selectedCoinToCompare2.name === coin.name) {
-      this.setState({selectedCoinToCompare1: this.state.selectedCoinToCompare1, selectedCoinToCompare2: {}});
+    if (base.name === coin.name) {
+      this.setState({ coinToCompare: { base:{}, quote: quote }});
+    }if (quote.name === coin.name) {
+      this.setState({ coinToCompare: { base: base, quote: {} }});
     }
-  };
-
-  handleSelectedCoinToCompare = (coins) => {
-    console.log("coin", coins);
-    this.setState({coinsToCompare: coins})
   };
 
   render() {
-
-    console.log("storage", this.state.selectedCoins );
     return (
       <Container>
         <Inputs>
           <CoinInputStyle onChange={this.handleSelectedCoin} />
           <CoinCompareInput
-            coinToCompare1={this.state.selectedCoinToCompare1}
-            coinToCompare2={this.state.selectedCoinToCompare2}
+            coinToCompare={this.state.coinToCompare}
           />
         </Inputs>
         <CoinTiles>
           {this.state.selectedCoins !== {} ?
             Object.values(this.state.selectedCoins).map(item =>
               (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
-                  <CoinDetails coinToCompare={this.setCoinToCompare} onClick={this.updateSelectedCoin} coin={item} />
+                  <CoinDetails
+                    coinToCompare={this.setCoinToCompare}
+                    onClick={this.updateSelectedCoin} coin={item}
+                  />
                 </ThemeProvider>
               ))
             :
