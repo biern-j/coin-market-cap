@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import "./App.css";
+
+import { Coin } from "./Components/CoinComparison/style";
 import CoinInput from "./Components/coin-input";
 import coinMarketCapData from "./app-coin-data-processing/coin-output";
-import CoinDetails from "./Components/coin-tile/coin-details";
+import CoinDetails from "./Components/CoinTileDetails/coin-tile-details";
 import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
 import CoinCompareInput from "./Components/CoinComparison/coin-compare-input";
 
 const Container = styled.div`
   display: flex;
-  // flex-direction: column;
+  //flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -70,7 +71,10 @@ class App extends Component {
     coinsData: {},
     counter: 0,
     selectedCoins: {},
-    coinToCompare: {base: {}, quote: {}}
+    coinToCompare: {
+      base: {},
+      quote: {}
+    }
   };
 
   async componentDidMount() {
@@ -143,8 +147,9 @@ class App extends Component {
       this.setState({ coinToCompare: { base: base, quote: coin }});
     }
     if (base.name === coin.name) {
-      this.setState({ coinToCompare: { base:{}, quote: quote }});
-    }if (quote.name === coin.name) {
+      this.setState({ coinToCompare: { base: {}, quote: quote }});
+    }
+    if (quote.name === coin.name) {
       this.setState({ coinToCompare: { base: base, quote: {} }});
     }
   };
@@ -157,19 +162,32 @@ class App extends Component {
           <CoinCompareInput
             coinToCompare={this.state.coinToCompare}
           />
+          {
+            this.state.coinToCompare.base.name !== undefined && this.state.coinToCompare.quote.name !== undefined ?
+              (<Coin
+                placeholder={`${this.state.coinToCompare.base / this.state.coinToCompare.quote}:
+              ${this.state.coinToCompare.base.quotes.USD.price / this.state.coinToCompare.quote.quotes.USD.price }$`}
+              />)
+              :
+              ""
+          }
         </Inputs>
         <CoinTiles>
-          {this.state.selectedCoins !== {} ?
-            Object.values(this.state.selectedCoins).map(item =>
-              (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
+          {
+            this.state.selectedCoins !== {} ?
+            Object.values(this.state.selectedCoins).map(item => {
+              console.log("item", item);
+             return (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
                   <CoinDetails
                     coinToCompare={this.setCoinToCompare}
-                    onClick={this.updateSelectedCoin} coin={item}
+                    onClick={this.updateSelectedCoin}
+                    coin={item}
                   />
                 </ThemeProvider>
-              ))
+              )})
             :
-            {}}
+            {}
+          }
         </CoinTiles>
       </Container>
     );
