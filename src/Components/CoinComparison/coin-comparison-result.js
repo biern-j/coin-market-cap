@@ -4,9 +4,7 @@ import { Coin } from "./style";
 const CoinComparisonResult = ({ coinBase, coinQuote }) =>
   <Coin
     placeholder={`
-    ${coinBase / coinQuote}
-      :
-      ${coinBase.quotes.USD.price / coinQuote.quotes.USD.price }
+    ${coinBase.name} / ${coinQuote.name}: ${coinBase.quotes.USD.price / coinQuote.quotes.USD.price }
       $
       `}
   />;

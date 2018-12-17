@@ -153,6 +153,8 @@ class App extends Component {
   };
 
   render() {
+    console.log("coinBase name", this.state.coinBase);
+    console.log( "coinQuote name", this.state.coinQuote);
     return (
       <Container>
         <Inputs>
@@ -162,7 +164,7 @@ class App extends Component {
             coinQuote={this.state.coinQuote}
           />
           {
-            this.state.coinBase.name !== undefined && this.state.coinQuote.name !== undefined ?
+            this.state.coinBase.name && this.state.coinQuote.name ?
               (<CoinComparisonResult
                 coinBase={this.state.coinBase}
                 coinQuote={this.state.coinQuote}
