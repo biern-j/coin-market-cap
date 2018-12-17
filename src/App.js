@@ -137,24 +137,35 @@ class App extends Component {
   };
 
   setCoinToCompare = (coin) => {
-    const { coinBase, coinQuote } = this.state;
-    if (coinBase.name === undefined) {
-      this.setState({ coinBase: coin, coinQuote });
-    }
-    if (coinQuote.name === undefined) {
-      this.setState({ coinBase, coinQuote: coin });
-    }
-    if (coinBase.name === coin.name) {
-      this.setState({ coinBase: {}, coinQuote });
-    }
-    if (coinQuote.name === coin.name) {
-      this.setState({ coinBase, coinQuote: {} });
-    }
+    this.setState(state => {
+
+      let coinBaseState;
+      let coinQuoteState;
+
+      if(state.coinBase.name === undefined) {
+        coinBaseState = coin;
+        coinQuoteState = state.coinQuote;
+      }
+      if(state.coinBase.name === coin.name) {
+        coinBaseState = {};
+        coinQuoteState = state.coinQuote;
+      }
+      if(state.coinQuote.name === undefined) {
+        coinBaseState = state.coinBase;
+        coinQuoteState = coin;
+      }
+      if(state.coinQuote.name === coin.name) {
+        coinBaseState = state.coinBase;
+        coinQuoteState = {};
+      }
+    return ({
+        coinBase: coinBaseState,
+        coinQuote: coinQuoteState
+    });
+    });
   };
 
   render() {
-    console.log("coinBase name", this.state.coinBase);
-    console.log( "coinQuote name", this.state.coinQuote);
     return (
       <Container>
         <Inputs>
