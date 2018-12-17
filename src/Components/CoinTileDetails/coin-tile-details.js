@@ -48,7 +48,7 @@ class CoinDetails extends React.Component {
                 <PriceChangeCoin changeType={handlePriceChange(coin.quotes.USD.percent_change_24h)} >
                   {coin.quotes.USD.percent_change_24h}%</PriceChangeCoin>
               </SinglePriceChange>
-              <Icon onClick={() => this.props.onClick(coin.id)} icon={loop2}/>
+              <Icon onClick={this.props.onClick(coin.id)} icon={loop2}/>
             </PriceChangeBox>
           </FirstRow>
           <SecondRow>
