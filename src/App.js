@@ -71,10 +71,12 @@ class App extends Component {
     coinsData: {},
     counter: 0,
     selectedCoins: {},
-    coinToCompare: {
-      base: {},
-      quote: {}
-    }
+    coinBase: {},
+    coinQuote: {}
+    // coinToCompare: {
+    //   base: {},
+    //   quote: {}
+    // }
   };
 
   async componentDidMount() {
@@ -139,18 +141,18 @@ class App extends Component {
   };
 
   setCoinToCompare = (coin) => {
-    const { base, quote } = this.state.coinToCompare;
-    if (base.name === undefined) {
-      this.setState({coinToCompare: { base: coin, quote: quote }});
+    const { coinBase, coinQuote } = this.state;
+    if (coinBase.name === undefined) {
+      this.setState({ coinBase: coin, coinQuote });
     }
-    if (quote.name === undefined) {
-      this.setState({ coinToCompare: { base: base, quote: coin }});
+    if (coinQuote.name === undefined) {
+      this.setState({ coinBase, coinQuote: coin });
     }
-    if (base.name === coin.name) {
-      this.setState({ coinToCompare: { base: {}, quote: quote }});
+    if (coinBase.name === coin.name) {
+      this.setState({ coinBase: {}, coinQuote });
     }
-    if (quote.name === coin.name) {
-      this.setState({ coinToCompare: { base: base, quote: {} }});
+    if (coinQuote.name === coin.name) {
+      this.setState({ coinBase, coinQuote: {} });
     }
   };
 
@@ -160,13 +162,14 @@ class App extends Component {
         <Inputs>
           <CoinInputStyle onChange={this.handleSelectedCoin} />
           <CoinCompareInput
-            coinToCompare={this.state.coinToCompare}
+            coinBase={this.state.coinBase}
+            coinQuote={this.state.coinQuote}
           />
           {
-            this.state.coinToCompare.base.name !== undefined && this.state.coinToCompare.quote.name !== undefined ?
+            this.state.coinBase.name !== undefined && this.state.coinQuote.name !== undefined ?
               (<Coin
-                placeholder={`${this.state.coinToCompare.base / this.state.coinToCompare.quote}:
-              ${this.state.coinToCompare.base.quotes.USD.price / this.state.coinToCompare.quote.quotes.USD.price }$`}
+                placeholder={`${this.state.coinBase / this.state.coinQuote}:
+              ${this.state.coinBase.quotes.USD.price / this.state.coinQuote.quotes.USD.price }$`}
               />)
               :
               ""
