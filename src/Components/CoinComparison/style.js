@@ -42,3 +42,31 @@ export const Inputs = styled.div`
     animation: gradient 3s linear infinite;
   }
 `;
+
+export const Result = styled.div`
+  flex-grow: 1;
+  color: #BFD2FF;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  vertical-align: middle;
+  border-style: none;
+  background: transparent;
+  outline: none;
+`;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+`;
+
+export const CompareCoin = styled.div`
+  flex-grow: 1;
+  color: #BFD2FF;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  vertical-align: middle;
+  border-style: none;
+  background: transparent;
+  outline: none;
+`;
