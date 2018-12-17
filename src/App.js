@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 
-import { Coin } from "./Components/CoinComparison/style";
 import CoinInput from "./Components/coin-input";
 import coinMarketCapData from "./app-coin-data-processing/coin-output";
 import CoinDetails from "./Components/CoinTileDetails/coin-tile-details";
 import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
 import CoinCompareInput from "./Components/CoinComparison/coin-compare-input";
+import CoinComparisonResult from "./Components/CoinComparison/coin-comparison-result";
 
 const Container = styled.div`
   display: flex;
@@ -73,10 +73,6 @@ class App extends Component {
     selectedCoins: {},
     coinBase: {},
     coinQuote: {}
-    // coinToCompare: {
-    //   base: {},
-    //   quote: {}
-    // }
   };
 
   async componentDidMount() {
@@ -167,9 +163,9 @@ class App extends Component {
           />
           {
             this.state.coinBase.name !== undefined && this.state.coinQuote.name !== undefined ?
-              (<Coin
-                placeholder={`${this.state.coinBase / this.state.coinQuote}:
-              ${this.state.coinBase.quotes.USD.price / this.state.coinQuote.quotes.USD.price }$`}
+              (<CoinComparisonResult
+                coinBase={this.state.coinBase}
+                coinQuote={this.state.coinQuote}
               />)
               :
               ""
