@@ -191,7 +191,7 @@ class App extends Component {
               (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
                   <CoinDetails
                     coinToCompare={this.setCoinToCompare}
-                    onClick={() => this.updateSelectedCoin}
+                    onClick={this.updateSelectedCoin}
                     coin={item}
                   />
                 </ThemeProvider>
