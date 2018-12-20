@@ -72,15 +72,16 @@ class App extends Component {
     counter: 0,
     selectedCoins: {},
     baseCoin: {},
-    quoteCoin: {}
+    quoteCoin: {},
+    boldChosenTile: false
   };
 
   async componentDidMount() {
-    this.setState({ coinsData: await fetchAppData(listings) });
-
     const data = localStorage.getItem("coinData");
     if (data) {
       this.setState({ coinsData: JSON.parse(data) });
+    } else {
+      this.setState({ coinsData: await fetchAppData(listings) });
     }
 
     const selectedCoins = localStorage.getItem("selectedCoinsList");
@@ -136,35 +137,51 @@ class App extends Component {
     this.setState({ selectedCoins: resultUpdate });
   };
 
+  // setBoldTile = () => {
+  //   this.setState({ boldChosenTile: !this.state.boldChosenTile });
+  // };
+
   setCoinToCompare = (coin) => {
     this.setState(state => {
 
       let baseCoinState;
       let quoteCoinState;
+     // let boldCoin;
 
       if(state.baseCoin.name === undefined) {
         baseCoinState = coin;
         quoteCoinState = state.quoteCoin;
+       // boldCoin = !this.state.boldChosenTile;
       }
       if(state.baseCoin.name === coin.name) {
         baseCoinState = {};
         quoteCoinState = state.quoteCoin;
+        //boldCoin = !this.state.boldChosenTile;
       }
       if(state.quoteCoin.name === undefined) {
         baseCoinState = state.baseCoin;
         quoteCoinState = coin;
+        //boldCoin = !this.state.boldChosenTile;
       }
       if(state.quoteCoin.name === coin.name) {
         baseCoinState = state.baseCoin;
         quoteCoinState = {};
+        //boldCoin = !this.state.boldChosenTile;
       }
-      if (state.baseCoin !== undefined && state.quoteCoin !== undefined) {
+      if (state.baseCoin.name !== undefined &&
+        state.quoteCoin.name !== undefined &&
+        coin.name !== state.quoteCoin.name &&
+        coin.name !== state.baseCoin.name) {
         baseCoinState = coin;
         quoteCoinState = state.quoteCoin;
-      }
+        //boldCoin = !this.state.boldChosenTile;
+       }
+
     return ({
         baseCoin: baseCoinState,
-        quoteCoin: quoteCoinState
+        quoteCoin: quoteCoinState,
+        //boldChosenTile: boldCoin
+
     });
     });
   };
@@ -177,6 +194,7 @@ class App extends Component {
           <CoinCompareInput
             coinBase={this.state.baseCoin}
             coinQuote={this.state.quoteCoin}
+
           />
           {
             this.state.baseCoin.name && this.state.quoteCoin.name ?
@@ -197,6 +215,7 @@ class App extends Component {
                     coinToCompare={this.setCoinToCompare}
                     onClick={this.updateSelectedCoin}
                     coin={item}
+                    boldChosenTile={this.state.boldChosenTile}
                   />
                 </ThemeProvider>
               ))
