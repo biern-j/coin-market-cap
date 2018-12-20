@@ -72,8 +72,7 @@ class App extends Component {
     counter: 0,
     selectedCoins: {},
     baseCoin: {},
-    quoteCoin: {},
-    boldChosenTile: false
+    quoteCoin: {}
   };
 
   async componentDidMount() {
@@ -198,13 +197,13 @@ const setSelectedCoinToCompare = (state, coin) => {
     baseCoinState = coin;
     quoteCoinState = state.quoteCoin;
   }
-  if(state.baseCoin.name === coin.name) {
-    baseCoinState = {};
-    quoteCoinState = state.quoteCoin;
-  }
   if(state.quoteCoin.name === undefined) {
     baseCoinState = state.baseCoin;
     quoteCoinState = coin;
+  }
+  if(state.baseCoin.name === coin.name) {
+    baseCoinState = {};
+    quoteCoinState = state.quoteCoin;
   }
   if(state.quoteCoin.name === coin.name) {
     baseCoinState = state.baseCoin;
