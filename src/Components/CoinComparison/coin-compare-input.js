@@ -7,11 +7,12 @@ const CoinCompareInput = ({ coinBase, coinQuote }) =>
     <Inputs>
       <Coin
         disabled={true}
-        placeholder={coinBase.name === undefined ? "Base" : coinBase.name}
-      />
-      <Coin
-        disabled={true}
-        placeholder={coinQuote.name === undefined ? "Quote" : coinQuote.name}
+        placeholder={`
+        ${coinBase.name === undefined ?
+          "Base" : coinBase.name} /
+          ${coinQuote.name === undefined ?
+          "Quote" : coinQuote.name}
+          `}
       />
     </Inputs>
   </FormContainer>;
