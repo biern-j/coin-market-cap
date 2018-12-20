@@ -71,8 +71,8 @@ class App extends Component {
     coinsData: {},
     counter: 0,
     selectedCoins: {},
-    coinBase: {},
-    coinQuote: {}
+    baseCoin: {},
+    quoteCoin: {}
   };
 
   async componentDidMount() {
@@ -139,28 +139,32 @@ class App extends Component {
   setCoinToCompare = (coin) => {
     this.setState(state => {
 
-      let coinBaseState;
-      let coinQuoteState;
+      let baseCoinState;
+      let quoteCoinState;
 
-      if(state.coinBase.name === undefined) {
-        coinBaseState = coin;
-        coinQuoteState = state.coinQuote;
+      if(state.baseCoin.name === undefined) {
+        baseCoinState = coin;
+        quoteCoinState = state.quoteCoin;
       }
-      if(state.coinBase.name === coin.name) {
-        coinBaseState = {};
-        coinQuoteState = state.coinQuote;
+      if(state.baseCoin.name === coin.name) {
+        baseCoinState = {};
+        quoteCoinState = state.quoteCoin;
       }
-      if(state.coinQuote.name === undefined) {
-        coinBaseState = state.coinBase;
-        coinQuoteState = coin;
+      if(state.quoteCoin.name === undefined) {
+        baseCoinState = state.baseCoin;
+        quoteCoinState = coin;
       }
-      if(state.coinQuote.name === coin.name) {
-        coinBaseState = state.coinBase;
-        coinQuoteState = {};
+      if(state.quoteCoin.name === coin.name) {
+        baseCoinState = state.baseCoin;
+        quoteCoinState = {};
+      }
+      if (state.baseCoin !== undefined && state.quoteCoin !== undefined) {
+        baseCoinState = coin;
+        quoteCoinState = state.quoteCoin;
       }
     return ({
-        coinBase: coinBaseState,
-        coinQuote: coinQuoteState
+        baseCoin: baseCoinState,
+        quoteCoin: quoteCoinState
     });
     });
   };
@@ -171,14 +175,14 @@ class App extends Component {
         <Inputs>
           <CoinInputStyle onChange={this.handleSelectedCoin} />
           <CoinCompareInput
-            coinBase={this.state.coinBase}
-            coinQuote={this.state.coinQuote}
+            coinBase={this.state.baseCoin}
+            coinQuote={this.state.quoteCoin}
           />
           {
-            this.state.coinBase.name && this.state.coinQuote.name ?
+            this.state.baseCoin.name && this.state.quoteCoin.name ?
               (<CoinComparisonResult
-                coinBase={this.state.coinBase}
-                coinQuote={this.state.coinQuote}
+                coinBase={this.state.baseCoin}
+                coinQuote={this.state.quoteCoin}
               />)
               :
               ""
