@@ -38,7 +38,8 @@ export const Container = styled.div`
 
 export const Mask = styled.div`
   display: flex;
-  // width: 50%;
+  width: 50%;
+  flex-direction: column;
   // max-width: 28rem;
   // min-width: 22rem;
   background-blend-mode: normal, overlay;
@@ -143,6 +144,7 @@ export const FirstRow = styled.div`
 export const SecondRow = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 2.125rem;
 `;
 
 export const PriceChangeBox = styled.div`

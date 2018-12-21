@@ -35,9 +35,7 @@ class CoinDetails extends React.Component {
         <CoinName>
           {item.name}
         </CoinName>
-        <SecondRow>
         <FiatPrice>{item.quotes.USD.price}$</FiatPrice>
-      </SecondRow>
           <FirstRow>
             <PriceChangeBox>
               <SinglePriceChange>
