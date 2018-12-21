@@ -38,16 +38,16 @@ export const Container = styled.div`
 
 export const Mask = styled.div`
   display: flex;
-  width: 30%;
-  max-width: 28rem;
-  min-width: 22rem;
+  // width: 50%;
+  // max-width: 28rem;
+  // min-width: 22rem;
   background-blend-mode: normal, overlay;
   border-radius: 4px;
   border:  ${setBorderForCoinToCompare};
   background-image:linear-gradient(to right, #B294FF, #57E6E6);
   background-origin: border-box;
   background-clip: content-box, border-box;
-  margin: 1.125rem;
+  margin: 3.125rem;
 
   @media screen and (max-width: 414px) {
     flex: 1 1 fit-content;
@@ -132,12 +132,7 @@ export const PriceChangeCoin = styled.div`
 
 export const CoinBox = styled.div`
   display: flex;
-  flex-flow: column wrap;
-  width: 70%;
-
-  @media screen and (max-width: 414px) {
-    width: 100%;
-  }
+  flex-flow: column wrap; 
 `;
 
 export const FirstRow = styled.div`

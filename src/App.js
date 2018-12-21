@@ -147,6 +147,11 @@ class App extends Component {
     });
   };
 
+  setBoldCoins = (coin) => {
+    console.log("coin", coin);
+
+  };
+
   render() {
     return (
       <Container>
@@ -174,7 +179,8 @@ class App extends Component {
                   <CoinDetails
                     coinToCompare={this.setCoinToCompare}
                     onClick={this.updateSelectedCoin}
-                    coin={this.state.selectedCoins}
+                    coins={this.state.selectedCoins}
+                    boldedCoins={this.setBoldCoins}
                   />
                 </ThemeProvider>
               )

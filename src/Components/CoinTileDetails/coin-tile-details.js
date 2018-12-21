@@ -19,31 +19,26 @@ import {
 class CoinDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {boldChosenTile: false, checked: []};
+    this.state = { boldChosenTile: false, checked: [] };
   }
-  setBoldTile = (id) => {
-    this.setState({ boldChosenTile: !this.state.boldChosenTile, checked: [...this.state.checked, id ]});
-  };
-
-  isDisabled = id => {
-    return (
-      this.state.checked.length > 2 && this.state.checked.indexOf(id) === -1
-    );
+  setBoldTile = () => {
+    this.setState({ boldChosenTile: !this.state.boldChosenTile });
   };
 
   render(){
-    const { coin } = this.props;
-    const coinTile = Object.values(coin).map(item => (
+    const { coins } = this.props;
+    const coinTiles = Object.values(coins).map(item => (
       <Mask chosenCoin={this.state.boldChosenTile} onClick={() => {
-        this.props.coinToCompare(coin);
-        this.setBoldTile(item.id);
-        this.isDisabled(item.id);
+        this.props.coinToCompare(item);
+        this.setBoldTile();
       }}>
-        <CoinBox>
+        <CoinName>
+          {item.name}
+        </CoinName>
+        <SecondRow>
+        <FiatPrice>{item.quotes.USD.price}$</FiatPrice>
+      </SecondRow>
           <FirstRow>
-            <CoinName>
-              {item.name}
-            </CoinName>
             <PriceChangeBox>
               <SinglePriceChange>
                 <PriceChangeTitle>7d:</PriceChangeTitle>
@@ -58,13 +53,9 @@ class CoinDetails extends React.Component {
               <Icon onClick={this.props.onClick(() => item.id)} icon={loop2}/>
             </PriceChangeBox>
           </FirstRow>
-          <SecondRow>
-            <FiatPrice>{item.quotes.USD.price}$</FiatPrice>
-          </SecondRow>
-        </CoinBox>
       </Mask>
     ) );
-    return coinTile;
+    return coinTiles;
   };
 
 };
