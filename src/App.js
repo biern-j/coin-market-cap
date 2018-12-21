@@ -170,16 +170,14 @@ class App extends Component {
         <CoinTiles>
           {
             this.state.selectedCoins !== {} ?
-            Object.values(this.state.selectedCoins).map(item =>
-              (<ThemeProvider key={item.id} theme={themeCoinPairTile}>
+              (<ThemeProvider theme={themeCoinPairTile}>
                   <CoinDetails
                     coinToCompare={this.setCoinToCompare}
                     onClick={this.updateSelectedCoin}
-                    coin={item}
-                    boldChosenTile={this.state.boldChosenTile}
+                    coin={this.state.selectedCoins}
                   />
                 </ThemeProvider>
-              ))
+              )
             :
             {}
           }

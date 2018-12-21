@@ -19,44 +19,52 @@ import {
 class CoinDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {boldChosenTile: false};
+    this.state = {boldChosenTile: false, checked: []};
   }
-  setBoldTile = () => {
-    this.setState({ boldChosenTile: !this.state.boldChosenTile });
-
+  setBoldTile = (id) => {
+    this.setState({ boldChosenTile: !this.state.boldChosenTile, checked: [...this.state.checked, id ]});
   };
+
+  isDisabled = id => {
+    return (
+      this.state.checked.length > 2 && this.state.checked.indexOf(id) === -1
+    );
+  };
+
   render(){
     const { coin } = this.props;
-    return (
+    const coinTile = Object.values(coin).map(item => (
       <Mask chosenCoin={this.state.boldChosenTile} onClick={() => {
         this.props.coinToCompare(coin);
-        this.setBoldTile();
+        this.setBoldTile(item.id);
+        this.isDisabled(item.id);
       }}>
         <CoinBox>
           <FirstRow>
             <CoinName>
-              {coin.name}
+              {item.name}
             </CoinName>
             <PriceChangeBox>
               <SinglePriceChange>
                 <PriceChangeTitle>7d:</PriceChangeTitle>
-                <PriceChangeCoin changeType={handlePriceChange(coin.quotes.USD.percent_change_7d)} >
-                  {coin.quotes.USD.percent_change_7d}%</PriceChangeCoin>
+                <PriceChangeCoin changeType={handlePriceChange(item.quotes.USD.percent_change_7d)} >
+                  {item.quotes.USD.percent_change_7d}%</PriceChangeCoin>
               </SinglePriceChange>
               <SinglePriceChange>
                 <PriceChangeTitle> 24h:</PriceChangeTitle>
-                <PriceChangeCoin changeType={handlePriceChange(coin.quotes.USD.percent_change_24h)} >
-                  {coin.quotes.USD.percent_change_24h}%</PriceChangeCoin>
+                <PriceChangeCoin changeType={handlePriceChange(item.quotes.USD.percent_change_24h)} >
+                  {item.quotes.USD.percent_change_24h}%</PriceChangeCoin>
               </SinglePriceChange>
-              <Icon onClick={this.props.onClick(() => coin.id)} icon={loop2}/>
+              <Icon onClick={this.props.onClick(() => item.id)} icon={loop2}/>
             </PriceChangeBox>
           </FirstRow>
           <SecondRow>
-            <FiatPrice>{coin.quotes.USD.price}$</FiatPrice>
+            <FiatPrice>{item.quotes.USD.price}$</FiatPrice>
           </SecondRow>
         </CoinBox>
       </Mask>
-    );
+    ) );
+    return coinTile;
   };
 
 };
