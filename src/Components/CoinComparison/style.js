@@ -1,9 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import {thickRight} from 'react-icons-kit/iconic/thickRight';
-import { Icon } from 'react-icons-kit';
 
-const Coin = styled.input`
+export const Coin = styled.input`
   flex-grow: 1;
   color: #BFD2FF;
   font-size: 1.8rem;
@@ -14,24 +11,13 @@ const Coin = styled.input`
   outline: none;
 `;
 
-const CoinSubmit = styled.button`
-  color: #7881A1;
-  font-size: 2.4rem;
-  line-height: 2.4rem;
-  vertical-align: middle;
-  transition: color .25s; 
-  padding: 0;
-  background: none;
-  border: none;
-  outline: none;
-`;
-
-const FormContainer = styled.form`
+export const FormContainer = styled.form`
   display: flex;
+  flex-direction: column;
   align-content: center;
 `;
 
-const Inputs = styled.div`
+export const Inputs = styled.div`
  position: relative;
   display: flex;
   flex-direction: row;
@@ -57,16 +43,30 @@ const Inputs = styled.div`
   }
 `;
 
-const CoinComparison = ([coin1, coin2]) =>
-      <FormContainer onSubmit={this.handleSubmit}>
-        <Inputs>
-          <Coin
-            placeholder={coin1.name}
-          />
-          <Coin
-            placeholder={coin2.name}
-          />
-        </Inputs>
-      </FormContainer>;
+export const Result = styled.div`
+  flex-grow: 1;
+  color: #BFD2FF;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  vertical-align: middle;
+  border-style: none;
+  background: transparent;
+  outline: none;
+`;
 
-export default CoinComparison;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+`;
+
+export const CompareCoin = styled.div`
+  flex-grow: 1;
+  color: #BFD2FF;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  vertical-align: middle;
+  border-style: none;
+  background: transparent;
+  outline: none;
+`;

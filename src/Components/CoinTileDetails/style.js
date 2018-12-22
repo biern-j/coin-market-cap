@@ -12,6 +12,15 @@ const setChangeColor = props => {
   }
 };
 
+const setBorderForCoinToCompare = props => {
+  switch (props.chosenCoin) {
+    case true:
+      return "solid 1px red";
+    default:
+      return "solid 1px transparent";
+  }
+};
+
 export const Container = styled.div`
   display: flex;
   padding: 6.8125rem 15.625rem 2.75rem 15.0625rem;
@@ -29,16 +38,17 @@ export const Container = styled.div`
 
 export const Mask = styled.div`
   display: flex;
-  width: 30%;
-  max-width: 28rem;
-  min-width: 22rem;
+  width: 50%;
+  flex-direction: column;
+  // max-width: 28rem;
+  // min-width: 22rem;
   background-blend-mode: normal, overlay;
   border-radius: 4px;
-  border: solid 1px transparent;
+  border:  ${setBorderForCoinToCompare};
   background-image:linear-gradient(to right, #B294FF, #57E6E6);
   background-origin: border-box;
   background-clip: content-box, border-box;
-  margin: 1.125rem;
+  margin: 3.125rem;
 
   @media screen and (max-width: 414px) {
     flex: 1 1 fit-content;
@@ -100,10 +110,11 @@ export const FiatPrice = styled.span`
 
 export const PriceChangeTitle = styled.div`
   font-family: Roboto, sans-serif;
+   font-weight: bold;
   font-size: ${props => props.theme.fontSize.smaller};
   color: ${props => props.theme.color.primary};
   padding: 0.25rem 0;
-  margin-top: 0.25rem;
+  margin: 0.25rem;
 
   @media screen and (max-width: 414px) {
     margin-bottom: 0.125rem;
@@ -113,19 +124,16 @@ export const PriceChangeTitle = styled.div`
 
 export const PriceChangeCoin = styled.div`
   font-family: Roboto, sans-serif;
-  font-size: ${props => props.theme.fontSize.small};
+   font-weight: bold;
+  font-size: ${props => props.theme.fontSize.large};
   line-height: 1.5;
   color: ${setChangeColor};
+  margin: 0.25rem;
 `;
 
 export const CoinBox = styled.div`
   display: flex;
-  flex-flow: column wrap;
-  width: 70%;
-
-  @media screen and (max-width: 414px) {
-    width: 100%;
-  }
+  flex-flow: column wrap; 
 `;
 
 export const FirstRow = styled.div`
@@ -136,11 +144,11 @@ export const FirstRow = styled.div`
 export const SecondRow = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 2.125rem;
 `;
 
 export const PriceChangeBox = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: start;
   margin: 1.5625rem 0  1.4375rem 0.3125rem;
   width: 30%;
