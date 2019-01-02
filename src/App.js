@@ -8,7 +8,7 @@ import CoinDetails from "./Components/CoinTileDetails/coin-tile-details";
 import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
 import CoinCompareInput from "./Components/CoinComparison/coin-compare-input";
 import CoinComparisonResult from "./Components/CoinComparison/coin-comparison-result";
-import { setSelectedCoinToCompare } from "./setSelectedCoinToCompare";
+import { setSelectedCoinToCompare } from "./set-selected-coin-to-compare";
 
 const Container = styled.div`
   display: flex;
