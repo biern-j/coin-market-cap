@@ -8,6 +8,7 @@ import CoinDetails from "./Components/CoinTileDetails/coin-tile-details";
 import { fetchAppData, getPostAppForCoin } from "./app-coin-data-processing/coin-data-fetching";
 import CoinCompareInput from "./Components/CoinComparison/coin-compare-input";
 import CoinComparisonResult from "./Components/CoinComparison/coin-comparison-result";
+import { setSelectedCoinToCompare } from "./setSelectedCoinToCompare";
 
 const Container = styled.div`
   display: flex;
@@ -147,11 +148,6 @@ class App extends Component {
     });
   };
 
-  setBoldCoins = (coin) => {
-    console.log("coin", coin);
-
-  };
-
   render() {
     return (
       <Container>
@@ -180,7 +176,7 @@ class App extends Component {
                     coinToCompare={this.setCoinToCompare}
                     onClick={this.updateSelectedCoin}
                     coins={this.state.selectedCoins}
-                    boldedCoins={this.setBoldCoins}
+                    coinToBold={[this.state.baseCoin, this.state.quoteCoin]}
                   />
                 </ThemeProvider>
               )
@@ -192,39 +188,5 @@ class App extends Component {
     );
   }
 }
-
-const setSelectedCoinToCompare = (state, coin) => {
-  let baseCoinState;
-  let quoteCoinState;
-
-  if(state.baseCoin.name === undefined) {
-    baseCoinState = coin;
-    quoteCoinState = state.quoteCoin;
-  }
-  if(state.quoteCoin.name === undefined) {
-    baseCoinState = state.baseCoin;
-    quoteCoinState = coin;
-  }
-  if(state.baseCoin.name === coin.name) {
-    baseCoinState = {};
-    quoteCoinState = state.quoteCoin;
-  }
-  if(state.quoteCoin.name === coin.name) {
-    baseCoinState = state.baseCoin;
-    quoteCoinState = {};
-  }
-  if (state.baseCoin.name !== undefined &&
-    state.quoteCoin.name !== undefined &&
-    coin.name !== state.quoteCoin.name &&
-    coin.name !== state.baseCoin.name) {
-    baseCoinState = coin;
-    quoteCoinState = state.quoteCoin;
-  }
-  return {
-    baseCoinState,
-    quoteCoinState
-  }
-
-};
 
 export default App;

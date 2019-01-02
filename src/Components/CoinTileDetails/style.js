@@ -12,7 +12,7 @@ const setChangeColor = props => {
   }
 };
 
-const setBorderForCoinToCompare = props => {
+const setBoldBorderForCoinToCompare = props => {
   switch (props.chosenCoin) {
     case true:
       return "solid 1px red";
@@ -44,7 +44,7 @@ export const Mask = styled.div`
   // min-width: 22rem;
   background-blend-mode: normal, overlay;
   border-radius: 4px;
-  border:  ${setBorderForCoinToCompare};
+  border:  ${setBoldBorderForCoinToCompare};
   background-image:linear-gradient(to right, #B294FF, #57E6E6);
   background-origin: border-box;
   background-clip: content-box, border-box;
