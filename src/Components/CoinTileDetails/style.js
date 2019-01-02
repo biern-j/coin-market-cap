@@ -40,8 +40,8 @@ export const Mask = styled.div`
   display: flex;
   width: 50%;
   flex-direction: column;
-  // max-width: 28rem;
-  // min-width: 22rem;
+  max-width: 28rem;
+  min-width: 22rem;
   background-blend-mode: normal, overlay;
   border-radius: 4px;
   border:  ${setBoldBorderForCoinToCompare};
